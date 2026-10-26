@@ -1,0 +1,51 @@
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "~> 3.0"
+    }
+  }
+}
+
+provider "docker" {}
+
+# Download the Nginx Docker image
+resource "docker_image" "nginx" {
+  name         = "nginx:alpine"
+  keep_locally = true
+}
+
+# Create a Docker container
+resource "docker_container" "nginx_container" {
+  name  = "terraform-nginx-task3"
+  image = docker_image.nginx.image_id
+
+  ports {
+    internal = 80
+    external = 8080
+  }
+}
+
+Nayana Jatti
+12:51 PM
+# Terraform working files
+.terraform/
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# Local variable files
+*.tfvars
+*.tfvars.json
+
+# Local override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Keep the dependency lock file in Git
+# .terraform.lock.hcl should be committed
